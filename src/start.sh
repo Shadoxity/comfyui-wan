@@ -202,6 +202,8 @@ fi
 
 # Download text encoders
 echo "Downloading text encoders..."
+download_model "$TEXT_ENCODERS_DIR" "fantasytalking_fp16.safetensors" \
+  "Kijai/WanVideo_comfy" "umt5-xxl-enc-bf16.safetensorss"
 
 download_model "$TEXT_ENCODERS_DIR" "umt5_xxl_fp8_e4m3fn_scaled.safetensors" \
   "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
