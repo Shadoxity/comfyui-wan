@@ -103,6 +103,13 @@ TEXT_ENCODERS_DIR="$NETWORK_VOLUME/ComfyUI/models/text_encoders"
 CLIP_VISION_DIR="$NETWORK_VOLUME/ComfyUI/models/clip_vision"
 VAE_DIR="$NETWORK_VOLUME/ComfyUI/models/vae"
 
+
+ echo "Downloading fantasytalking models..."
+
+  download_model "$DIFFUSION_MODELS_DIR" "fantasytalking_fp16.safetensors" \
+    "Kijai/WanVideo_comfy" "fantasytalking_fp16.safetensors"
+
+
 # Download quantized models
 if [ "$download_quantized_model" == "true" ]; then
   echo "Downloading quantized models..."
@@ -127,8 +134,8 @@ if [ "$download_480p_native_models" == "true" ]; then
   download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_14B_bf16.safetensors" \
     "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_14B_bf16.safetensors"
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
+  #download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
+   # "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
 fi
 
 # Handle full download (with SDXL)
