@@ -26,19 +26,19 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --pre torch torchvision torchaudio \
         --index-url https://download.pytorch.org/whl/nightly/cu128 && \
-    rm -rf /root/.cache/pip
+    rm -rf /root/.cache/pip/*
 
 # Core Python tooling
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install packaging setuptools wheel && \
-    rm -rf /root/.cache/pip
+    rm -rf /root/.cache/pip/*
 
 # Runtime libraries
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install pyyaml gdown triton comfy-cli jupyterlab jupyterlab-lsp \
         jupyter-server jupyter-server-terminals \
         ipykernel jupyterlab_code_formatter && \
-    rm -rf /root/.cache/pip
+    rm -rf /root/.cache/pip/*
 
 # ------------------------------------------------------------
 # ComfyUI install
@@ -46,12 +46,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     /usr/bin/yes | comfy --workspace /ComfyUI install && \
-    rm -rf /root/.cache/pip
+    rm -rf /root/.cache/pip/*
 
 FROM base AS final
 # Make sure to use the virtual environment here too
 ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install opencv-python && rm -rf /root/.cache/pip
+RUN pip install opencv-python && rm -rf /root/.cache/pip/*
 
 RUN for repo in \
     https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git \
