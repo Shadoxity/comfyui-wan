@@ -39,6 +39,12 @@ else
     echo "Directory already exists, skipping move."
 fi
 
+#make sure comfyUi git is all ok
+cd /ComfyUI
+git reset --hard
+git pull
+cd /
+
 echo "Downloading CivitAI download script to /usr/local/bin"
 git clone "https://github.com/Hearmeman24/CivitAI_Downloader.git" || { echo "Git clone failed"; exit 1; }
 mv CivitAI_Downloader/download.py "/usr/local/bin/" || { echo "Move failed"; exit 1; }
