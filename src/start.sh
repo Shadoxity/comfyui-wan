@@ -102,6 +102,8 @@ DIFFUSION_MODELS_DIR="$NETWORK_VOLUME/ComfyUI/models/diffusion_models"
 TEXT_ENCODERS_DIR="$NETWORK_VOLUME/ComfyUI/models/text_encoders"
 CLIP_VISION_DIR="$NETWORK_VOLUME/ComfyUI/models/clip_vision"
 VAE_DIR="$NETWORK_VOLUME/ComfyUI/models/vae"
+ECHOMIMIC_DIR="$NETWORK_VOLUME/ComfyUI/models/echo_mimic"
+
 
 
  echo "Downloading fantasytalking models..."
@@ -198,6 +200,97 @@ if [ "$download_480p_debug" == "true" ]; then
 
   download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
     "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
+fi
+
+
+if [ "$download_echomimic" == "true" ]; then
+
+  echo "Downloading echo mimic Models"
+
+  mkdir -p $ECHOMIMIC_DIR/v2 && cd $ECHOMIMIC_DIR/v2
+
+  file="denoising_unet.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/denoising_unet.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="motion_module.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/motion_module.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="pose_encoder.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/pose_encoder.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="reference_unet.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/reference_unet.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="denoising_unet_acc.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/denoising_unet_acc.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="motion_module_acc.pth"
+  url="https://huggingface.co/BadToBest/EchoMimicV2/resolve/main/motion_module_acc.pth?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+
+  cd $ECHOMIMIC_DIR
+
+  file="yolov8m.pt"
+  url="https://huggingface.co/Ultralytics/YOLOv8/resolve/main/yolov8m.pt?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
+
+  file="sapiens_1b_goliath_best_goliath_AP_639_torchscript.pt2"
+  url="https://huggingface.co/facebook/sapiens-pose-1b-torchscript/resolve/main/sapiens_1b_goliath_best_goliath_AP_639_torchscript.pt2?download=true"
+
+  if [ -f "$file" ]; then
+      echo "$file already exists."
+  else
+      echo "Downloading $file"
+      wget -O $file $url --progress=bar:force:noscroll
+  fi
 fi
 
 # Download text encoders
