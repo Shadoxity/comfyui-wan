@@ -95,10 +95,6 @@ RUN for repo in \
     done && \
     rm -rf /root/.cache/pip && rm -rf /ComfyUI/custom_nodes/*/.git && rm -rf /ComfyUI/custom_nodes/*/.gitmodules && rm -rf /ComfyUI/custom_nodes/*/.github
 
-# Remove build tools and git after build
-RUN apt-get purge -y build-essential gcc python3.12-dev ninja-build && \
-    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Remove Python cache and __pycache__
 RUN find /opt/venv -type d -name '__pycache__' -exec rm -rf {} +
 
