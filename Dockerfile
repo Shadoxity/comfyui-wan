@@ -1,5 +1,5 @@
 # Use multi-stage build with caching optimizations
-FROM nvidia/cuda:12.5.1-runtime-ubuntu24.04 AS base
+FROM nvidia/cuda:12.5.1-devel-ubuntu24.04 AS base
 
 # Consolidated environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
