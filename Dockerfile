@@ -96,14 +96,7 @@ RUN for repo in \
         if [ -f "/ComfyUI/custom_nodes/$repo_dir/install.py" ]; then \
             python "/ComfyUI/custom_nodes/$repo_dir/install.py"; \
         fi; \
-    done 
-    #&& \
-    #rm -rf /root/.cache/pip && rm -rf /ComfyUI/custom_nodes/*/.git && rm -rf /ComfyUI/custom_nodes/*/.gitmodules && rm -rf /ComfyUI/custom_nodes/*/.github
-
-# Remove Python cache and __pycache__
-#RUN find /opt/venv -type d -name '__pycache__' -exec rm -rf {} +
-
-RUN rm -rf /root/.cache /tmp/*
+    done
 
 RUN rm -rf /root/.cache /tmp/*
 
