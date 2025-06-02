@@ -39,11 +39,6 @@ else
     echo "Directory already exists, skipping move."
 fi
 
-#make sure comfyUi git is all ok
-cd /ComfyUI
-git reset --hard
-git pull
-cd /
 
 echo "Downloading CivitAI download script to /usr/local/bin"
 git clone "https://github.com/Hearmeman24/CivitAI_Downloader.git" || { echo "Git clone failed"; exit 1; }
@@ -136,11 +131,11 @@ fi
 if [ "$download_480p_native_models" == "true" ]; then
   echo "Downloading 480p native models..."
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_i2v_480p_14B_bf16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_i2v_480p_14B_bf16.safetensors"
+  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_i2v_480p_14B_fp16.safetensors" \
+    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_i2v_480p_14B_fp16.safetensors"
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_14B_bf16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_14B_bf16.safetensors"
+  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_14B_fp16.safetensors" \
+    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_14B_fp16.safetensors"
 
   #download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
    # "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
@@ -187,14 +182,14 @@ fi
 if [ "$download_720p_native_models" == "true" ]; then
   echo "Downloading 720p native models..."
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_i2v_720p_14B_bf16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_i2v_720p_14B_bf16.safetensors"
+  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_i2v_720p_14B_fp16.safetensors" \
+    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_i2v_720p_14B_fp16.safetensors"
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_14B_bf16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_14B_bf16.safetensors"
+  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_14B_fp16.safetensors" \
+    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_14B_fp16.safetensors"
 
-  download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
-    "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
+  #download_model "$DIFFUSION_MODELS_DIR" "wan2.1_t2v_1.3B_fp16.safetensors" \
+   # "Comfy-Org/Wan_2.1_ComfyUI_repackaged" "split_files/diffusion_models/wan2.1_t2v_1.3B_fp16.safetensors"
 fi
 
 # Download 480p native models
