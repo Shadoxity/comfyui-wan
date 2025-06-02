@@ -1697,7 +1697,7 @@
         "bf16",
         "fp8_e4m3fn",
         "offload_device",
-        "sageattn"
+        "flex_attention"
       ],
       "color": "#223",
       "bgcolor": "#335"
