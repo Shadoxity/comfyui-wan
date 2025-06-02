@@ -1,5 +1,9 @@
 # Use multi-stage build with caching optimizations
-FROM nvidia/cuda:12.5.1-devel-ubuntu24.04 AS base
+ARG CUDA_VERSION="12.1.1"
+ARG CUDNN_VERSION="8"
+ARG UBUNTU_VERSION="22.04"
+ARG DOCKER_FROM=nvidia/cuda:$CUDA_VERSION-cudnn$CUDNN_VERSION-devel-ubuntu$UBUNTU_VERSION
+FROM ${DOCKER_FROM} AS base
 
 # Consolidated environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -10,14 +14,14 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        python3.12 python3.12-venv python3.12-dev \
+        python3.10 python3.10-venv python3.10-dev \
         python3-pip \
         curl ffmpeg ninja-build git aria2 git-lfs wget vim \
         libgl1 libglib2.0-0 build-essential gcc && \
-    # make Python3.12 the default python & pip
-    ln -sf /usr/bin/python3.12 /usr/bin/python && \
+    # make Python3.10 the default python & pip
+    ln -sf /usr/bin/python3.10 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip && \
-    python3.12 -m venv /opt/venv && \
+    python3.10 -m venv /opt/venv && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Use the virtual environment
@@ -25,8 +29,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install torch torchvision torchaudio \
-    --extra-index-url https://download.pytorch.org/whl/cu128 && \
-    rm -rf /root/.cache/pip/*
+        --index-url https://download.pytorch.org/whl/cu121
 
 # Core Python tooling
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -77,14 +80,15 @@ RUN for repo in \
     https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git \
     https://github.com/Jonseed/ComfyUI-Detail-Daemon.git \
     https://github.com/kijai/ComfyUI-WanVideoWrapper.git \
+    https://github.com/smthemex/ComfyUI_EchoMimic.git \
     https://github.com/M1kep/ComfyLiterals.git; \
     do \
         cd /ComfyUI/custom_nodes; \
         repo_dir=$(basename "$repo" .git); \
         if [ "$repo" = "https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git" ]; then \
-            git clone --recursive "$repo"; \
+            git clone --depth=1  --recursive "$repo"; \
         else \
-            git clone "$repo"; \
+            git clone --depth=1  "$repo"; \
         fi; \
         if [ -f "/ComfyUI/custom_nodes/$repo_dir/requirements.txt" ]; then \
             pip install -r "/ComfyUI/custom_nodes/$repo_dir/requirements.txt"; \
@@ -98,6 +102,10 @@ RUN for repo in \
 
 # Remove Python cache and __pycache__
 #RUN find /opt/venv -type d -name '__pycache__' -exec rm -rf {} +
+
+RUN rm -rf /root/.cache /tmp/*
+
+RUN rm -rf /root/.cache /tmp/*
 
 COPY src/start_script.sh /start_script.sh
 RUN chmod +x /start_script.sh
