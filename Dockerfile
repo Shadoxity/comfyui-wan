@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install -y --no-install-recommends \
         python3.12 python3.12-venv python3.12-dev \
         python3-pip \
-        curl ffmpeg ninja-build git git-lfs wget vim \
+        curl ffmpeg ninja-build git aria2 git-lfs wget vim \
         libgl1 libglib2.0-0 build-essential gcc && \
     # make Python3.12 the default python & pip
     ln -sf /usr/bin/python3.12 /usr/bin/python && \
@@ -24,8 +24,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 ENV PATH="/opt/venv/bin:$PATH"
 
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --pre torch torchvision torchaudio \
-        --index-url https://download.pytorch.org/whl/nightly/cu128 && \
+    pip install torch torchvision torchaudio \
+    --extra-index-url https://download.pytorch.org/whl/cu128 && \
     rm -rf /root/.cache/pip/*
 
 # Core Python tooling
